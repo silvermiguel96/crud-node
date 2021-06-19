@@ -1,7 +1,7 @@
 const pool = require("./config");
 const queryUsers = `
   CREATE TABLE users (
-      id integer,
+      id serial not null primary key,
       nombre varchar,
       apellido varchar,
       correo varchar,
@@ -12,8 +12,8 @@ const queryUsers = `
 const queryBooks = `
   CREATE TABLE libros (
       id integer,
-      nombre varchar,
-      editorial varchar,
+      NAME varchar,
+      EDITORIAL varchar,
       username varchar
   );
 `;
