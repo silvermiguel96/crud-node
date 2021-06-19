@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 // });
 
 // createLibros();
-createUsuario();
+// createUsuario();
 
 const userRoutes = require("./api/routes/Users");
 
