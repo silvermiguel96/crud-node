@@ -1,3 +1,4 @@
+const { query } = require("../../config/database/config");
 const pool = require("../../config/database/config");
 
 // const createUserQuery = `
@@ -84,8 +85,47 @@ module.exports = {
     const userById = await pool.query(
       `SELECT  * FROM  users u  WHERE u.id  = ${userId}`
     );
-    
+
     response.json(userById.rows);
+  },
+
+  deleteUsers: async function (required, response) {
+    const userId = required.params.id;
+    //Tema de respuestas
+    const userById = await pool.query(
+      `SELECT  * FROM  users u  WHERE u.id  = ${userId}`
+    );
+    if (!userById.rows.length) {
+      response.status(400).json("Error no se encontro un usuario");
+    }
+    await pool.query(`DELETE FROM users u  WHERE u.id  = ${userId}`);
+    response.json(`Usuario ${userId} fue borrado con exito`);
+  },
+
+
+  //Vamos a crear la  la ruta PUT ('metodo para cambiar pero todo ')
+
+  updateUsersPut: async function (required, response) {
+    const userId = required.params.id;
+
+    const nombre = required.body.nombre;
+    console.log(nombre);
+    //Tema de respuestas
+    const userById = await pool.query(
+      `SELECT  * FROM  users u  WHERE u.id  = ${parseInt(userId)}`
+    );
+    if (!userById.rows.length) {
+      response.status(400).json("Error no se encontro un usuario");
+    }
+
+    const updatedUsers = await pool.query()
+    `UPDATE users SET nombre = ${nombre} WHERE users.id = ${parseInt(userId)}`
+
+    console.log('updatedUsers', updatedUsers);
+
+    response.json(updatedUsers)
+
+
   },
 
   // getUserById() {
