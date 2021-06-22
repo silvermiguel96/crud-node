@@ -12,9 +12,9 @@ const queryUsers = `
 const queryBooks = `
   CREATE TABLE libros (
       id integer,
-      NAME varchar,
-      EDITORIAL varchar,
-      username varchar
+      name varchar,
+      editorial varchar,
+      username varchar 
   );
 `;
 
