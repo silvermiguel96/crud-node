@@ -8,10 +8,11 @@ const port = process.env.PORT || 3000;
 const host = process.env.HOST || "127.0.0.1";
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// pool.query("SELECT NOW()", (err, res) => {
-//   console.log("Connect Succes!");
-//   pool.end();
-// });
+pool.query("SELECT NOW()", (err, res) => {
+  console.log("Connect Succes!");
+  console.log(res.rows);
+  // pool.end();
+});
 
 // createLibros();
 // createUsuario();
