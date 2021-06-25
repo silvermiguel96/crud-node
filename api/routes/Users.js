@@ -1,12 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controllerUser = require('../controllers/Users');
+const controllerUser = require("../controllers/Users");
 
-router.post('/add', controllerUser.createUser);
-router.get('/list', controllerUser.getUsers);
-router.get('/list/:id', controllerUser.getUserById);
-router.delete('/:id', controllerUser.deleteUsers);
+router.post("/add", controllerUser.createUser);
+router.get("/list", controllerUser.getUsers);
+router.get("/list/:id", controllerUser.getUserById);
+router.delete("/:id", controllerUser.deleteUsers);
 // Tener en cuenta la empresa como nos dice que seria lo indicado de trabajar.
-router.put('/cambiar/todos/datos/:userId',controllerUser.updateUsersPut )
+router.put("/cambiar/todos/datos/:userId", controllerUser.updateUsersPut);
+router.patch("/actualizar/:id", controllerUser.updateUsersPatch);
 
 module.exports = router;

@@ -25,12 +25,12 @@ module.exports = {
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
     const correo = req.body.correo;
-    const username = req.body.correo;
-    const password = req.body.correo;
+    const username = req.body.username;
+    const password = req.body.password;
 
     console.log(nombre, apellido, correo, username, password);
     pool.query(
-      `INSERT INTO USERS ( nombre , cprrep , apellido , username , password )
+      `INSERT INTO USERS ( nombre , correo , apellido , username , password )
        VALUES ('${nombre}', '${apellido}', '${correo}' , '${username}', '${password}' )`
     );
     res.json({ message: "se ingreso el usuario con exito" });
@@ -102,7 +102,6 @@ module.exports = {
     response.json(`Usuario ${userId} fue borrado con exito`);
   },
 
-
   //Vamos a crear la  la ruta PUT ('metodo para cambiar pero todo ')
 
   updateUsersPut: async function (required, response) {
@@ -110,22 +109,45 @@ module.exports = {
 
     const nombre = required.body.nombre;
     console.log(nombre);
+
     //Tema de respuestas
     const userById = await pool.query(
-      `SELECT  * FROM  users u  WHERE u.id  = ${parseInt(userId)}`
+      `SELECT  * FROM  users u  WHERE u.id  = ${userId}`
     );
     if (!userById.rows.length) {
       response.status(400).json("Error no se encontro un usuario");
     }
 
-    const updatedUsers = await pool.query()
-    `UPDATE users SET nombre = ${nombre} WHERE users.id = ${parseInt(userId)}`
+    const updatedUsers =
+      await pool.query()`UPDATE users SET nombre = ${nombre} WHERE users.id = ${parseInt(
+        userId
+      )}`;
 
-    console.log('updatedUsers', updatedUsers);
+    console.log("updatedUsers", updatedUsers);
 
-    response.json(updatedUsers)
+    response.json(updatedUsers);
+  },
 
+  // PATCH
 
+  updateUsersPatch: async function (required, response) {
+    const userId = required.params.id;
+    const nombre = required.body.nombre;
+    const apellido = required.body.apellido;
+    const correo = required.body.correo;
+    const username = required.body.username;
+    const password = required.body.password;
+
+    const userById = await pool.query(
+      `SELECT  * FROM  users u  WHERE u.id  = ${userId}`
+    );
+
+    const updatePatch = await pool.query(
+      `UPDATE users SET nombre = '${nombre}', apellido = '${apellido}', correo = '${correo}', username = '${username}', password = '${password}' WHERE users.id = ${userId}`
+    );
+
+    console.log("Se ha actualizado la información");
+    return response.json({ message: "Actualizando" });
   },
 
   // getUserById() {
@@ -138,6 +160,4 @@ module.exports = {
   //     pool.end();
   //   });
   // },
-
-  
 };
